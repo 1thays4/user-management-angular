@@ -1,0 +1,261 @@
+<div class="form-container">
+  <p-toast></p-toast> 
+<p-tabs [(value)]="abaAtiva">
+    <p-tablist>
+        <p-tab [value]="0">Dados Pessoais</p-tab>
+        <p-tab [value]="1" [disabled]="formularioDadosPessoais.invalid">Endereço</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+        <p-tabpanel [value]="0">
+      <form [formGroup]="formularioDadosPessoais" class="form-content">
+        <div class="form-group">
+          <label for="firstName">Nome *</label>
+          <input
+            pInputText
+            id="firstName"
+            type="text"
+            formControlName="primeiroNome"
+            placeholder="Digite seu nome"
+            class="w-full"
+            [class.ng-invalid]="formularioDadosPessoais.get('primeiroNome')?.invalid && formularioDadosPessoais.get('primeiroNome')?.touched"
+          />
+          @if (formularioDadosPessoais.get('primeiroNome')?.invalid && formularioDadosPessoais.get('primeiroNome')?.touched) {
+            <small class="error-message">
+              @if (formularioDadosPessoais.get('primeiroNome')?.errors?.['required']) {
+                Nome é obrigatório
+              }
+              @if (formularioDadosPessoais.get('primeiroNome')?.errors?.['minlength']) {
+                Nome deve ter pelo menos 2 caracteres
+              }
+            </small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="lastName">Sobrenome *</label>
+          <input
+            pInputText
+            id="lastName"
+            type="text"
+            formControlName="ultimoNome"
+            placeholder="Digite seu sobrenome"
+            class="w-full"
+          />
+          @if (formularioDadosPessoais.get('ultimoNome')?.invalid && formularioDadosPessoais.get('ultimoNome')?.touched) {
+            <small class="error-message">
+              @if (formularioDadosPessoais.get('ultimoNome')?.errors?.['required']) {
+                Sobrenome é obrigatório
+              }
+              @if (formularioDadosPessoais.get('ultimoNome')?.errors?.['minlength']) {
+                Sobrenome deve ter pelo menos 2 caracteres
+              }
+            </small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Gênero *</label>
+          <p-select
+            id="gender"
+            [options]="opcoesGenero"
+            formControlName="genero"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Selecione um gênero"
+            styleClass="w-full"
+          />
+          @if (formularioDadosPessoais.get('genero')?.invalid && formularioDadosPessoais.get('genero')?.touched) {
+            <small class="error-message">
+              Gênero é obrigatório
+            </small>
+          }
+        </div>
+
+        <button
+          pButton
+          type="button"
+          label="Próximo"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          (click)="proximoPasso()"
+          class="w-full"
+          [disabled]="formularioDadosPessoais.invalid"
+        ></button>
+      </form>
+        </p-tabpanel>
+
+        <p-tabpanel [value]="1">
+      <form [formGroup]="formularioEndereco" class="form-content">
+        <div class="form-group">
+          <label for="cep">CEP *</label>
+          <p-inputmask
+            id="cep"
+            formControlName="cep"
+            mask="99999-999"
+            placeholder="00000-000"
+            (onBlur)="aoAlterarCep()"
+            [disabled]="buscandoCep"
+            styleClass="w-full"
+          />
+          @if (formularioEndereco.get('cep')?.invalid && formularioEndereco.get('cep')?.touched) {
+            <small class="error-message">
+              @if (formularioEndereco.get('cep')?.errors?.['required']) {
+                CEP é obrigatório
+              }
+              @if (formularioEndereco.get('cep')?.errors?.['invalidCep']) {
+                CEP inválido (formato: 00000-000)
+              }
+              @if (formularioEndereco.get('cep')?.errors?.['cepInvalido']) {
+                CEP não encontrado
+              }
+            </small>
+          }
+          @if (buscandoCep) {
+            <small class="info-message">Buscando CEP...</small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="state">Estado (UF) *</label>
+          <input
+            pInputText
+            id="state"
+            type="text"
+            formControlName="estado"
+            placeholder="Estado (UF)"
+            class="w-full"
+            readonly
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="street">Rua *</label>
+          <input
+            pInputText
+            id="street"
+            type="text"
+            formControlName="rua"
+            placeholder="Rua"
+            class="w-full"
+            readonly
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="neighborhood">Bairro *</label>
+          <input
+            pInputText
+            id="neighborhood"
+            type="text"
+            formControlName="bairro"
+            placeholder="Bairro"
+            class="w-full"
+            readonly
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="number">Número *</label>
+          <input
+            pInputText
+            id="number"
+            type="number"
+            formControlName="numero"
+            placeholder="Apenas números"
+            class="w-full"
+          />
+          @if (formularioEndereco.get('numero')?.invalid && formularioEndereco.get('numero')?.touched) {
+            <small class="error-message">
+              @if (formularioEndereco.get('numero')?.errors?.['required']) {
+                Número é obrigatório
+              }
+              @if (formularioEndereco.get('numero')?.errors?.['pattern']) {
+                Apenas números são permitidos
+              }
+            </small>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="complement">Complemento</label>
+          <input
+            pInputText
+            id="complement"
+            type="text"
+            formControlName="complemento"
+            placeholder="Apto, casa, etc (opcional)"
+            class="w-full"
+          />
+        </div>
+
+        <div class="button-group">
+          <button
+            pButton
+            type="button"
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            iconPos="left"
+            (click)="abaAtiva = 0"
+            class="p-button-secondary"
+            severity="secondary"
+          ></button>
+          <button
+            pButton
+            type="button"
+            label="Salvar"
+            icon="pi pi-save"
+            iconPos="left"
+            (click)="salvarUsuario()"
+            [disabled]="buscandoCep"
+            [loading]="buscandoCep"
+          ></button>
+        </div>
+      </form>
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>
+
+  <p-dialog
+    header="Cadastro Realizado com Sucesso!"
+    [visible]="exibirDialogo"
+    (visibleChange)="exibirDialogo = $event"
+    [modal]="true"
+    [style]="{ width: '50vw', minHeight: '300px' }"
+    [breakpoints]="{ '960px': '75vw', '768px': '90vw', '480px': '95vw' }"
+    [maximizable]="true"
+    [draggable]="false"
+  >
+    <ng-template pTemplate="header">
+      <div class="dialog-header">
+        <i class="pi pi-check-circle" style="font-size: 1.5rem; color: #22c55e; margin-right: 0.5rem;"></i>
+        <span>Cadastro Realizado com Sucesso!</span>
+      </div>
+    </ng-template>
+    @if (usuarioSalvo) {
+      <div class="confirmation-content">
+        <div class="section">
+          <h3>Dados Pessoais</h3>
+          <p><strong>Nome:</strong> {{ usuarioSalvo.firstName }}</p>
+          <p><strong>Sobrenome:</strong> {{ usuarioSalvo.lastName }}</p>
+          <p><strong>Gênero:</strong> {{ obterRotuloGenero(usuarioSalvo.gender) }}</p>
+        </div>
+
+        <div class="section">
+          <h3>Endereço</h3>
+          <p><strong>CEP:</strong> {{ usuarioSalvo.address.cep }}</p>
+          <p><strong>Estado:</strong> {{ usuarioSalvo.address.state }}</p>
+          <p><strong>Rua:</strong> {{ usuarioSalvo.address.street }}</p>
+          <p><strong>Bairro:</strong> {{ usuarioSalvo.address.neighborhood }}</p>
+          <p><strong>Número:</strong> {{ usuarioSalvo.address.number }}</p>
+          @if (usuarioSalvo.address.complement) {
+            <p><strong>Complemento:</strong> {{ usuarioSalvo.address.complement }}</p>
+          }
+        </div>
+      </div>
+    }
+
+    <ng-template pTemplate="footer">
+      <button pButton label="Fechar" icon="pi pi-times" (click)="fecharDialogo()" class="p-button-success"></button>
+    </ng-template>
+  </p-dialog>
+</div> 
