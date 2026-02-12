@@ -1,0 +1,56 @@
+<div class="list-container">
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+
+  <div class="header">
+    <h2>Lista de Usuários</h2>
+    <button pButton label="Novo Usuário" icon="pi pi-plus" (click)="novoUsuario()"></button>
+  </div>
+
+  <p-table [value]="usuarios" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nome</th>
+        <th>Sobrenome</th>
+        <th>Gênero</th>
+        <th>CEP</th>
+        <th>Estado (UF)</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario let-i="rowIndex">
+      <tr>
+        <td>{{ usuario.firstName }}</td>
+        <td>{{ usuario.lastName }}</td>
+        <td>{{ obterRotuloGenero(usuario.gender) }}</td>
+        <td>{{ usuario.address.cep }}</td>
+        <td>{{ usuario.address.state }}</td>
+        <td>
+          <button 
+            pButton 
+            icon="pi pi-pencil" 
+            class="p-button-rounded p-button-text p-button-warning"
+            (click)="editarUsuario(usuario, i)"
+            pTooltip="Editar"
+          ></button>
+          <button 
+            pButton 
+            icon="pi pi-trash" 
+            class="p-button-rounded p-button-text p-button-danger"
+            (click)="excluirUsuario(usuario, i)"
+            pTooltip="Excluir"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="empty-message">
+          <i class="pi pi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+          <p>Nenhum usuário cadastrado</p>
+          <button pButton label="Cadastrar Primeiro Usuário" (click)="novoUsuario()"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

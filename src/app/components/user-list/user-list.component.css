@@ -1,0 +1,48 @@
+.list-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header h2 {
+  margin: 0;
+  color: #667eea;
+}
+
+.empty-message {
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-message p {
+  margin: 1rem 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .list-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .header button {
+    width: 100%;
+  }
+}
