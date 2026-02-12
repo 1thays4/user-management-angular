@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, timeout, retry } from 'rxjs/operators';
-import { CepValidator } from 'src/app/shared/models/validators/cep.validator';
+import { CepValidator } from 'src/app/shared/validators/cep.validator';
 import { ViaCepResponse } from 'src/app/shared/models/viacep-response.model';
 
 
