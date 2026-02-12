@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "vertrau-challenge": {
+    "management-system": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/vertrau-challenge",
+            "outputPath": "dist/management-system",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -47,14 +47,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "vertrau-challenge:build"
+            "buildTarget": "management-system:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "vertrau-challenge:build:production"
+              "buildTarget": "management-system:build:production"
             },
             "development": {
-              "buildTarget": "vertrau-challenge:build:development"
+              "buildTarget": "management-system:build:development"
             }
           },
           "defaultConfiguration": "development"
